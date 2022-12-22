@@ -3,6 +3,8 @@ import {
     DefaultJobQueuePlugin,
     DefaultSearchPlugin,
     VendureConfig,
+    DefaultTaxZoneStrategy,
+    DefaultTaxLineCalculationStrategy,
 } from '@vendure/core';
 import { defaultEmailHandlers, EmailPlugin } from '@vendure/email-plugin';
 import { AssetServerPlugin } from '@vendure/asset-server-plugin';
@@ -13,6 +15,10 @@ import path from 'path';
 const IS_DEV = process.env.APP_ENV === 'dev';
 
 export const config: VendureConfig = {
+    taxOptions: {
+        taxZoneStrategy: new DefaultTaxZoneStrategy(),
+        taxLineCalculationStrategy: new DefaultTaxLineCalculationStrategy(),
+    },
     apiOptions: {
         port: 8080,
         adminApiPath: 'admin-api',
