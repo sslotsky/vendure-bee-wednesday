@@ -74,7 +74,11 @@ export const config: VendureConfig = {
     },
     // When adding or altering custom field definitions, the database will
     // need to be updated. See the "Migrations" section in README.md.
-    customFields: {},
+    customFields: {
+        OrderLine: [
+            { name: 'transformation', type: 'string' }
+        ]
+    },
     plugins: [
         StripePlugin.init({
             apiKey: process.env.STRIPE_SECRET_KEY,
