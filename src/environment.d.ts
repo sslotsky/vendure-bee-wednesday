@@ -15,6 +15,9 @@ declare global {
             DB_USERNAME: string;
             DB_PASSWORD: string;
             DB_SCHEMA: string;
+            DATABASE_URL: string;
+            STRIPE_WEBHOOK_SIGNING_SECRET: string;
+            STRIPE_SECRET_KEY: string;
         }
     }
 }

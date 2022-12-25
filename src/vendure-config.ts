@@ -7,6 +7,7 @@ import {
     DefaultTaxLineCalculationStrategy,
 } from '@vendure/core';
 import { defaultEmailHandlers, EmailPlugin } from '@vendure/email-plugin';
+import { StripePlugin } from '@vendure/payments-plugin/package/stripe';
 import { AssetServerPlugin } from '@vendure/asset-server-plugin';
 import { AdminUiPlugin } from '@vendure/admin-ui-plugin';
 import 'dotenv/config';
@@ -51,8 +52,6 @@ export const config: VendureConfig = {
         type: 'postgres',
         // See the README.md "Migrations" section for an explanation of
         // the `synchronize` and `migrations` options.
-        synchronize: true,
-        dropSchema: true,
         migrations: [path.join(__dirname, './migrations/*.+(js|ts)')],
         logging: false,
         database: process.env.DB_NAME,
@@ -77,6 +76,12 @@ export const config: VendureConfig = {
     // need to be updated. See the "Migrations" section in README.md.
     customFields: {},
     plugins: [
+        StripePlugin.init({
+            apiKey: process.env.STRIPE_SECRET_KEY,
+            webhookSigningSecret: process.env.STRIPE_WEBHOOK_SIGNING_SECRET,
+            // This prevents different customers from using the same PaymentIntent
+            storeCustomersInStripe: true
+        }),
         AssetServerPlugin.init({
             route: 'assets',
             assetUploadDir: path.join(__dirname, '../static/assets'),
