@@ -96,7 +96,7 @@ export const config: VendureConfig = {
         }),
         DefaultJobQueuePlugin.init({ useDatabaseForBuffer: true }),
         DefaultSearchPlugin.init({ bufferUpdates: false, indexStockStatus: true }),
-        EmailPlugin.init({
+        EmailPlugin.init(IS_DEV ? {
             devMode: true,
             outputPath: path.join(__dirname, '../static/email/test-emails'),
             route: 'mailbox',
@@ -110,6 +110,18 @@ export const config: VendureConfig = {
                 passwordResetUrl: 'http://localhost:8080/password-reset',
                 changeEmailAddressUrl: 'http://localhost:8080/verify-email-address-change'
             },
+        } : {
+            handlers: defaultEmailHandlers,
+            templatePath: path.join(__dirname, '../static/email/templates'),
+            transport: {
+              type: 'smtp',
+              host: process.env.SMTP_HOST,
+              port: 587,
+              auth: {
+                user: process.env.SENDGRID_USERNAME,
+                pass: process.env.SENDGRID_KEY,
+              }
+            }
         }),
         AdminUiPlugin.init({
             route: 'admin',

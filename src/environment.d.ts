@@ -18,6 +18,9 @@ declare global {
             DATABASE_URL: string;
             STRIPE_WEBHOOK_SIGNING_SECRET: string;
             STRIPE_SECRET_KEY: string;
+            SMTP_HOST: string;
+            SENDGRID_USERNAME: string;
+            SENDGRID_KEY: string;
         }
     }
 }
