@@ -3,7 +3,7 @@
 <mj-section background-color="#fafafa">
     <mj-column>
         <mj-text color="#525252">
-            This is a test email: {{ line.customFields.transformation }}
+            This is a test email: <a href="{{ payload.url }}">Order ID {{ payload.orderId }}</a>
         </mj-text>
     </mj-column>
 </mj-section>
