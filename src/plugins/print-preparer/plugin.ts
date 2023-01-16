@@ -6,11 +6,21 @@ import {
   OrderStateTransitionEvent,
 } from "@vendure/core";
 import { filter } from "rxjs/operators";
+import gql from "graphql-tag";
 import { PrintPreparerService } from "./service";
+import { OrderLineEntityResolver } from "./resolvers";
 
 @VendurePlugin({
   imports: [PluginCommonModule],
   providers: [PrintPreparerService],
+  shopApiExtensions: {
+    schema: gql`
+      extend type OrderLine {
+        previewUrl: String!
+      }
+    `,
+    resolvers: [OrderLineEntityResolver],
+  },
 })
 export class PrintPreparerPlugin implements OnApplicationBootstrap {
   constructor(
