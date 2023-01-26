@@ -4,6 +4,7 @@ import {
   PluginCommonModule,
   VendurePlugin,
   OrderStateTransitionEvent,
+  ProductVariantEvent,
 } from "@vendure/core";
 import { filter } from "rxjs/operators";
 import gql from "graphql-tag";
@@ -34,6 +35,13 @@ export class PrintPreparerPlugin implements OnApplicationBootstrap {
       .pipe(filter((event) => event.toState === "PaymentSettled"))
       .subscribe(async (event) => {
         this.service.prepare(event.order);
+      });
+
+    this.eventBus
+      .ofType(ProductVariantEvent)
+      .pipe(filter((event) => ["created", "updated"].includes(event.type)))
+      .subscribe(async (event) => {
+        this.service.populateDimensions(event);
       });
   }
 }
