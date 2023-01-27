@@ -2,7 +2,7 @@
 
 A headless e-comm solution for selling custom prints of photos and digital art. 
 
-This software depends on external solutions for image management, file storage, and email. The former is done with [ImageKit][image-kit]. File storage is configurable with any S3 compatible provider, and email is configurable via SMTP. Changing an environment variable is all that's needed to change out configurable components. 
+This software depends on external solutions for image management, file storage, and email. The former is done with [ImageKit][image-kit]. File storage is configurable with any S3 compatible provider, and email is configurable via SMTP. Changing an environment variable is all that's needed to change out configurable components. For the implementation currently in production:
 
 * [Fly.io][fly] houses the storefront, API, and database
 * [Vendure][vendure] provides an extensible, headless e-comm API
