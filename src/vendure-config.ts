@@ -26,7 +26,7 @@ const IS_DEV = process.env.APP_ENV === "dev";
 const printsPreparedHandler = new EmailEventListener("test-email")
   .on(PrintsPreparedEvent)
   .setRecipient(() => "saxosamo@gmail.com")
-  .setFrom("sam@saxymofo.com")
+  .setFrom("no-reply@beewednesday.art")
   .setSubject("This is a test")
   .setTemplateVars((evt) => ({ payload: evt.payload }));
 
@@ -153,7 +153,7 @@ export const config: VendureConfig = {
             globalTemplateVars: {
               // The following variables will change depending on your storefront implementation.
               // Here we are assuming a storefront running at http://localhost:8080.
-              fromAddress: '"example" <noreply@example.com>',
+              fromAddress: '"Bee" <bee@beewednesday.art>',
               verifyEmailAddressUrl: "http://localhost:8080/verify",
               passwordResetUrl: "http://localhost:8080/password-reset",
               changeEmailAddressUrl:
@@ -163,6 +163,9 @@ export const config: VendureConfig = {
         : {
             handlers: defaultEmailHandlers,
             templatePath: path.join(__dirname, "../static/email/templates"),
+            globalTemplateVars: {
+              fromAddress: '"Bee" <bee@beewednesday.art>',
+            },
             transport: {
               type: "smtp",
               host: process.env.SMTP_HOST,
