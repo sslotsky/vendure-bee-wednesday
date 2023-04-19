@@ -20,6 +20,7 @@ import {
   PrintPreparerPlugin,
   PrintsPreparedEvent,
 } from "./plugins/print-preparer";
+import { customAdminUi } from "./custom-admin";
 
 const IS_DEV = process.env.APP_ENV === "dev";
 
@@ -138,7 +139,9 @@ export const config: VendureConfig = {
       // For local dev, the correct value for assetUrlPrefix should
       // be guessed correctly, but for production it will usually need
       // to be set manually to match your production url.
-      assetUrlPrefix: IS_DEV ? undefined : "https://www.my-shop.com/assets",
+      assetUrlPrefix: IS_DEV
+        ? undefined
+        : "https://vendure-bee.fly.dev//assets",
     }),
     DefaultJobQueuePlugin.init({ useDatabaseForBuffer: true }),
     DefaultSearchPlugin.init({ bufferUpdates: false, indexStockStatus: true }),
@@ -177,6 +180,10 @@ export const config: VendureConfig = {
     AdminUiPlugin.init({
       route: "admin",
       port: 3002,
+      adminUiConfig: {
+        apiPort: 8080,
+      },
+      app: customAdminUi({ recompile: IS_DEV, devMode: IS_DEV }),
     }),
   ],
 };

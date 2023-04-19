@@ -1,0 +1,69 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="../../theme.min.css" />
+    <script src="../devkit/ui-devkit.js"></script>
+    <style>
+      table {
+        margin: auto;
+      }
+
+      th, td {
+        border: 1px solid black;
+        padding: 0.5rem 1rem;
+        text-align: center;
+      }
+      td:not(:first-child) {
+        background-color: #b7c5d9;
+        color: white;
+        cursor: pointer;
+      }
+      td:not(:first-child):hover {
+        filter: brightness(0.7);
+      }
+      td.enabled {
+        background-color: limegreen;
+      }
+      td.disabled {
+        background-color: rgb(176, 57, 57);
+      }
+
+      button.add {
+        background-color: transparent;
+        border: 0;
+        width: 100%;
+        cursor: pointer;
+      }
+
+      input[type=number] {
+        width: 3rem;
+      }
+
+      .new-size {
+        margin-bottom: 0.5rem;
+      }
+
+      .new-size label {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .evenly-spaced {
+        display: flex;
+        justify-content: space-around;
+        grid-gap: 0.5rem;
+      }
+
+    </style>
+  </head>
+  <body>
+    <script type="module">
+      import { render } from "https://cdn.skypack.dev/solid-js/web";
+      import { App } from './app.js';
+
+      const url = new URL(window.location.href);
+      VendureUiClient.setTargetOrigin(url.origin);
+
+      render(App, document.body);
+    </script>
+  </body>
+</html>
