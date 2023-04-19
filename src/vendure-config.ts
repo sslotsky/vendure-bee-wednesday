@@ -14,6 +14,7 @@ import {
 import { StripePlugin } from "@vendure/payments-plugin/package/stripe";
 import { AssetServerPlugin } from "@vendure/asset-server-plugin";
 import { AdminUiPlugin } from "@vendure/admin-ui-plugin";
+import { compileUiExtensions } from "@vendure/ui-devkit/compiler";
 import "dotenv/config";
 import path from "path";
 import {
@@ -180,6 +181,26 @@ export const config: VendureConfig = {
     AdminUiPlugin.init({
       route: "admin",
       port: 3002,
+      app: compileUiExtensions({
+        outputPath: path.join(__dirname, "../admin-ui"),
+        extensions: [
+          {
+            extensionPath: path.join(__dirname, "ui-extension/modules"),
+            ngModules: [
+              {
+                type: "lazy",
+                route: "manage-variants",
+                ngModuleFileName: "manage-variants.module.ts",
+                ngModuleName: "ManageVariantsExtensionModule",
+              },
+            ],
+            staticAssets: [
+              path.join(__dirname, "ui-extension/manage-variants"),
+            ],
+          },
+        ],
+        devMode: true,
+      }),
     }),
   ],
 };
