@@ -1,7 +1,7 @@
 {
   "adminApiPath": "admin-api",
   "apiHost": "auto",
-  "apiPort": "auto",
+  "apiPort": 8080,
   "tokenMethod": "cookie",
   "authTokenHeaderKey": "vendure-auth-token",
   "defaultLanguage": "en",

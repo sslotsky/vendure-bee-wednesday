@@ -21,6 +21,7 @@ import {
   PrintPreparerPlugin,
   PrintsPreparedEvent,
 } from "./plugins/print-preparer";
+import { customAdminUi } from "./custom-admin";
 
 const IS_DEV = process.env.APP_ENV === "dev";
 
@@ -181,26 +182,10 @@ export const config: VendureConfig = {
     AdminUiPlugin.init({
       route: "admin",
       port: 3002,
-      app: compileUiExtensions({
-        outputPath: path.join(__dirname, "../admin-ui"),
-        extensions: [
-          {
-            extensionPath: path.join(__dirname, "ui-extension/modules"),
-            ngModules: [
-              {
-                type: "lazy",
-                route: "manage-variants",
-                ngModuleFileName: "manage-variants.module.ts",
-                ngModuleName: "ManageVariantsExtensionModule",
-              },
-            ],
-            staticAssets: [
-              path.join(__dirname, "ui-extension/manage-variants"),
-            ],
-          },
-        ],
-        devMode: true,
-      }),
+      adminUiConfig: {
+        apiPort: 8080,
+      },
+      app: customAdminUi({ recompile: IS_DEV, devMode: IS_DEV }),
     }),
   ],
 };

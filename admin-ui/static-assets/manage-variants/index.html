@@ -1,20 +1,20 @@
 <html>
+  <head>
+    <link rel="stylesheet" href="../../theme.min.css" />
+    <script src="../devkit/ui-devkit.js"></script>
+    <style>
+      
+    </style>
+  </head>
   <body>
-    <!-- <script type="module">
-      import {
-        createSignal,
-        onCleanup,
-      } from "https://cdn.skypack.dev/solid-js";
+    <script type="module">
       import { render } from "https://cdn.skypack.dev/solid-js/web";
-      import html from "https://cdn.skypack.dev/solid-js/html";
+      import { App } from './app.js';
 
-      const App = () => {
-        const [count, setCount] = createSignal(0),
-          timer = setInterval(() => setCount(count() + 1), 1000);
-        onCleanup(() => clearInterval(timer));
-        return html`<div>${count}</div>`;
-      };
+      const url = new URL(window.location.href);
+      VendureUiClient.setTargetOrigin(url.origin);
+
       render(App, document.body);
-    </script> -->
+    </script>
   </body>
 </html>
