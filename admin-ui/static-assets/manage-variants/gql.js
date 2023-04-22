@@ -8,6 +8,15 @@ export const customPrintQuery = gql`
       id
       name
       slug
+      optionGroups {
+        code
+        name
+        options {
+          id
+          code
+          name
+        }
+      }
       variants {
         id
         sku
@@ -19,6 +28,22 @@ export const customPrintQuery = gql`
           material
         }
       }
+    }
+  }
+`;
+
+export const createVariantMutation = gql`
+  mutation CreateVariant($input: [CreateProductVariantInput!]!) {
+    createProductVariants(input: $input) {
+      __typename
+    }
+  }
+`;
+
+export const updateVariantsMutation = gql`
+  mutation UpdateVariants($input: [UpdateProductVariantInput!]!) {
+    updateProductVariants(input: $input) {
+      __typename
     }
   }
 `;

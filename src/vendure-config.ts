@@ -14,7 +14,6 @@ import {
 import { StripePlugin } from "@vendure/payments-plugin/package/stripe";
 import { AssetServerPlugin } from "@vendure/asset-server-plugin";
 import { AdminUiPlugin } from "@vendure/admin-ui-plugin";
-import { compileUiExtensions } from "@vendure/ui-devkit/compiler";
 import "dotenv/config";
 import path from "path";
 import {
