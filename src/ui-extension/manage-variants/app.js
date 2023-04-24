@@ -9,7 +9,7 @@ import { createStore } from "https://cdn.skypack.dev/solid-js/store"
 import { customPrintQuery, createVariantMutation, updateVariantsMutation, createProductOptionMutation } from './gql.js';
 
 async function getProducts() {
-  return VendureUiClient.graphQlQuery(customPrintQuery, { slug: 'custom-print' });
+  return VendureUiClient.graphQlQuery(customPrintQuery, { slug: '{{CUSTOM_PRINT_SLUG}}' });
 }
 
 async function createVariant(productId, width, height, material, optionIds) {

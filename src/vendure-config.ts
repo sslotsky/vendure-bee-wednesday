@@ -180,9 +180,13 @@ export const config: VendureConfig = {
     AdminUiPlugin.init({
       route: "admin",
       port: 3002,
-      adminUiConfig: {
-        apiPort: 8080,
-      },
+      ...(IS_DEV
+        ? {
+            adminUiConfig: {
+              apiPort: 8080,
+            },
+          }
+        : {}),
       app: customAdminUi({ recompile: IS_DEV, devMode: IS_DEV }),
     }),
   ],
