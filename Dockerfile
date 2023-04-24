@@ -1,6 +1,7 @@
 FROM debian:bullseye as builder
 
-ARG NODE_VERSION=18.12.1
+ARG NODE_VERSION=16.20.0
+ARG CUSTOM_PRINT_SLUG
 
 RUN apt-get update; apt install -y curl
 RUN curl https://get.volta.sh | bash
@@ -18,6 +19,7 @@ WORKDIR /app
 # Ref: https://docs.npmjs.com/cli/v9/commands/npm-install#description
 
 ENV NODE_ENV production
+ENV CUSTOM_PRINT_SLUG=$CUSTOM_PRINT_SLUG
 
 COPY . .
 

@@ -6,7 +6,9 @@
     "dev:server": "ts-node ./src/index.ts",
     "dev:worker": "ts-node ./src/index-worker.ts",
     "dev": "concurrently npm:dev:*",
-    "build": "tsc",
+    "compile-admin-ui": "ts-node src/custom-admin.ts",
+    "inject-vars": "npx envsub --syntax handlebars src/ui-extension/manage-variants/app.js src/ui-extension/manage-variants/app.js",
+    "build": "rimraf dist && rimraf admin-ui && tsc && npm run inject-vars && npm run compile-admin-ui",
     "start:server": "node ./dist/index.js",
     "start:worker": "node ./dist/index-worker.js",
     "start": "concurrently npm:start:*",
@@ -20,6 +22,7 @@
     "@vendure/core": "1.9.1",
     "@vendure/email-plugin": "^1.9.1",
     "@vendure/payments-plugin": "^1.9.1",
+    "@vendure/ui-devkit": "^1.9.5",
     "adm-zip": "^0.5.10",
     "aws-sdk": "^2.1283.0",
     "dotenv": "16.0.3",
@@ -32,6 +35,7 @@
     "@types/adm-zip": "^0.5.0",
     "@types/minio": "^7.0.15",
     "concurrently": "7.6.0",
+    "envsub": "^4.1.0",
     "ts-node": "10.9.1"
   }
 }

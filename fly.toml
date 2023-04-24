@@ -8,6 +8,9 @@ processes = []
 [env]
   PORT = "8080"
 
+[build.args]
+  CUSTOM_PRINT_SLUG = "custom-print-3"
+
 [deploy]
   release_command = "npm run migration:run"
 
