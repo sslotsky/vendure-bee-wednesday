@@ -7,8 +7,7 @@
     "dev:worker": "ts-node ./src/index-worker.ts",
     "dev": "concurrently npm:dev:*",
     "compile-admin-ui": "ts-node src/custom-admin.ts",
-    "inject-vars": "npx envsub --syntax handlebars src/ui-extension/manage-variants/app.js src/ui-extension/manage-variants/app.js",
-    "build": "rimraf dist && rimraf admin-ui && tsc && npm run inject-vars && npm run compile-admin-ui",
+    "build": "rimraf dist && rimraf admin-ui && tsc && npm run compile-admin-ui",
     "start:server": "node ./dist/index.js",
     "start:worker": "node ./dist/index-worker.js",
     "start": "concurrently npm:start:*",
@@ -26,6 +25,7 @@
     "adm-zip": "^0.5.10",
     "aws-sdk": "^2.1283.0",
     "dotenv": "16.0.3",
+    "envsub": "^4.1.0",
     "imagekit": "^4.1.2",
     "pg": "8.8.0",
     "stripe": "^8.222.0",
@@ -35,7 +35,6 @@
     "@types/adm-zip": "^0.5.0",
     "@types/minio": "^7.0.15",
     "concurrently": "7.6.0",
-    "envsub": "^4.1.0",
     "ts-node": "10.9.1"
   }
 }
