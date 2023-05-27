@@ -7,7 +7,7 @@ import {
   DefaultTaxLineCalculationStrategy,
 } from "@vendure/core";
 import {
-  defaultEmailHandlers,
+  orderConfirmationHandler,
   EmailEventListener,
   EmailPlugin,
 } from "@vendure/email-plugin";
@@ -21,6 +21,7 @@ import {
   PrintsPreparedEvent,
 } from "./plugins/print-preparer";
 import { customAdminUi } from "./custom-admin";
+import { previewUrl } from "./plugins/print-preparer/image-kit";
 
 const IS_DEV = process.env.APP_ENV === "dev";
 
@@ -30,6 +31,28 @@ const printsPreparedHandler = new EmailEventListener("test-email")
   .setFrom("sam@saxymofo.com")
   .setSubject("This is a test")
   .setTemplateVars((evt) => ({ payload: evt.payload }));
+
+orderConfirmationHandler
+  .loadData(async ({ event }) => {
+    const lines = event.order.lines.map(async (line) => ({
+      ...line,
+      previewUrl: await previewUrl(line),
+    }));
+
+    const order = {
+      ...event.order,
+      lines: await Promise.all(lines),
+    };
+
+    console.log("loading data", order);
+    return { order };
+  })
+  .setTemplateVars((evt) => {
+    console.log("template vars", evt);
+    return { order: evt.data.order };
+  });
+
+const emailHandlers = [printsPreparedHandler, orderConfirmationHandler];
 
 export const baseConfig: VendureConfig = {
   taxOptions: {
@@ -161,7 +184,7 @@ export async function getConfig(): Promise<VendureConfig> {
               devMode: true,
               outputPath: path.join(__dirname, "../static/email/test-emails"),
               route: "mailbox",
-              handlers: defaultEmailHandlers.concat(printsPreparedHandler),
+              handlers: emailHandlers,
               templatePath: path.join(__dirname, "../static/email/templates"),
               globalTemplateVars: {
                 // The following variables will change depending on your storefront implementation.
@@ -174,7 +197,7 @@ export async function getConfig(): Promise<VendureConfig> {
               },
             }
           : {
-              handlers: defaultEmailHandlers,
+              handlers: emailHandlers,
               templatePath: path.join(__dirname, "../static/email/templates"),
               transport: {
                 type: "smtp",
