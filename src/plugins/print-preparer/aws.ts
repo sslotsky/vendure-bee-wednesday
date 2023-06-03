@@ -70,7 +70,7 @@ export const uploadFile = async (bucket: string, key: string, file: Buffer) => {
   exp.setMonth(exp.getMonth() + 1);
 
   try {
-    const response = await s3
+    return s3
       .upload({
         Bucket: bucket,
         Key: key,
@@ -78,8 +78,6 @@ export const uploadFile = async (bucket: string, key: string, file: Buffer) => {
         Expires: exp,
       })
       .promise();
-    console.log(response);
-    return response;
   } catch (err) {
     console.error("Failed with: ", err);
     throw err;

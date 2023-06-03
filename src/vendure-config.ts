@@ -32,7 +32,7 @@ const printsPreparedHandler = new EmailEventListener("test-email")
   .setSubject("This is a test")
   .setTemplateVars((evt) => ({ payload: evt.payload }));
 
-orderConfirmationHandler
+const customConfirmation = orderConfirmationHandler
   .loadData(async ({ event }) => {
     const lines = event.order.lines.map(async (line) => ({
       ...line,
@@ -44,15 +44,13 @@ orderConfirmationHandler
       lines: await Promise.all(lines),
     };
 
-    console.log("loading data", order);
     return { order };
   })
   .setTemplateVars((evt) => {
-    console.log("template vars", evt);
     return { order: evt.data.order };
   });
 
-const emailHandlers = [printsPreparedHandler, orderConfirmationHandler];
+const emailHandlers = [printsPreparedHandler, customConfirmation];
 
 export const baseConfig: VendureConfig = {
   taxOptions: {
